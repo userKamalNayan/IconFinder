@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="5dp">
+
+    <ImageView
+        android:layout_width="45dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="-10dp"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/paid" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/icon_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toTopOf="@+id/icon_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0" />
+
+        <TextView
+            android:id="@+id/icon_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:fontFamily="@font/lato_heavy"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/icon_image"
+            tools:text="Orange" />
+
+        <ImageView
+            android:id="@+id/download_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:src="@drawable/ic_download"
+            app:layout_constraintBottom_toBottomOf="@+id/icon_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@+id/icon_name"
+            app:layout_constraintTop_toTopOf="@+id/icon_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_heavy"
+            android:padding="8dp"
+            android:textColor="@android:color/holo_green_light"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@+id/icon_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@+id/icon_name"
+            app:layout_constraintTop_toTopOf="@+id/icon_name"
+            tools:text="Price is " />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>
