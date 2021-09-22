@@ -16,12 +16,11 @@ inline fun <reified T> createWebService(url: String): T {
         .setLenient()
         .create()
 
-    val client: OkHttpClient? = OkHttpClient.Builder().addInterceptor { chain ->
+    val client: OkHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
         val newRequest: Request = chain.request().newBuilder()
-            .addHeader("Authorization", "Bearer "+BuildConfig.API_KEY)
-            //.addHeader("Accept", "application/json")
+            .addHeader("Authorization", "Bearer ${BuildConfig.API_KEY}")
             .build()
-        chain.proceed(newRequest)
+        return@addInterceptor chain.proceed(newRequest)
     }.build()
 
     val retrofit = Retrofit.Builder()

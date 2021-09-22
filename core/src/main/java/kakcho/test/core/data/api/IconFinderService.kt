@@ -1,10 +1,8 @@
 package kakcho.test.core.data.api
 
-import kakcho.test.core.BuildConfig
 import kakcho.test.core.data.model.response.IconsResponse
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -13,10 +11,17 @@ import retrofit2.http.Query
  */
 interface IconFinderService {
 
-   @GET("iconsets/{setId}/icons")
+    @GET("iconsets/{setId}/icons")
     suspend fun getIcons(
-       @Header("Authorization")  api:String,
+        //   @Header("Authorization") api: String,
         @Path("setId") setId: String,
-     ): Response<IconsResponse>
+    ): Response<IconsResponse>
 
+
+    @GET("icons/search")
+    suspend fun searchIcon(
+        //   @Header("Authorization") api: String,
+        @Query("query") query: String,
+        @Query("count") count: Int,
+    ): Response<IconsResponse>
 }

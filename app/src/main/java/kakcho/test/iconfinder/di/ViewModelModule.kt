@@ -8,5 +8,10 @@ import org.koin.dsl.module
  * Created by Kamal Nayan on 22-09-2021 at 14:10
  */
 val viewModelModule = module {
-    viewModel { MainViewModel(getIconsOfSetUseCase = get()) }
+    viewModel {
+        MainViewModel(
+            getIconsOfSetUseCase = get(),
+            searchIconUseCase = get()
+        )
+    }
 }

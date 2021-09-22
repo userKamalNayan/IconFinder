@@ -17,5 +17,5 @@ data class Icon(
     val prices: List<Price>,
 
     @SerializedName("icon_id")
-    val id: Int
+    val iconId: Int
 ):BaseModel()

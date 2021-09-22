@@ -3,6 +3,7 @@ package kakcho.test.iconfinder.di
 import kakcho.test.core.data.repository.IconsOfSetRepositoryImpl
 import kakcho.test.core.domain.repository.IconsOfSetRepository
 import kakcho.test.core.domain.usecase.GetIconsOfSetUseCase
+import kakcho.test.core.domain.usecase.SearchIconUseCase
 import org.koin.dsl.module
 
 /**
@@ -14,5 +15,9 @@ val repositoryModule = module {
 
     factory {
         GetIconsOfSetUseCase(iconsOfSetRepository = get())
+    }
+
+    factory {
+        SearchIconUseCase(iconFinderRepository = get())
     }
 }

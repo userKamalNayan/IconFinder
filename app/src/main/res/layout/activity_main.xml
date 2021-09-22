@@ -19,6 +19,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintVertical_bias="0"
             app:layout_constraintBottom_toTopOf="@+id/epoxy_recyclerview"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -115,6 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:padding="10dp"
+            app:isVisible="@{!mainViewModel.loading}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -122,8 +124,16 @@
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
             app:spanCount="2"
             tools:itemCount="10"
-            tools:listitem="@layout/layout_epoxy_recycler_icons" />
+            tools:listitem="@layout/layout_epoxy_icons_recycler" />
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:isVisible="@{mainViewModel.loading}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
