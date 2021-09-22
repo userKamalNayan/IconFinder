@@ -22,10 +22,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "API_KEY", "\"YoqCxA4tlABYGa1HwINaofTj3IroAmf3ZxrBcfXCape6WHfs53FoDdFQCdSPJYWO\""
             buildConfigField "String", "CLIENT_SECRET_KEY", "\"sSfLXDBha68gkZyLkqx0k308bKFSz2uOscq5TUpX9c3JBet60f4PkDtoleQJ9nfB\""
+            buildConfigField "String" ,"BASE_URL", "\"https://api.iconfinder.com/v4/\""
         }
         debug {
             buildConfigField "String", "API_KEY", "\"YoqCxA4tlABYGa1HwINaofTj3IroAmf3ZxrBcfXCape6WHfs53FoDdFQCdSPJYWO\""
             buildConfigField "String", "CLIENT_SECRET_KEY", "\"sSfLXDBha68gkZyLkqx0k308bKFSz2uOscq5TUpX9c3JBet60f4PkDtoleQJ9nfB\""
+            buildConfigField "String" ,"BASE_URL", "\"https://api.iconfinder.com/v4/\""
         }
     }
     compileOptions {
@@ -49,4 +51,7 @@ dependencies {
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    //Debugging
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }
