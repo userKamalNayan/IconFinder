@@ -46,7 +46,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0"
-                app:loadImageByUrl="@{icon.rasterSizes.get(icon.rasterSizes.size()-1).formats.get(0).previewUrl}" />
+                app:loadImageByUrl='@{icon.rasterSizes!=null?icon.rasterSizes.get(icon.rasterSizes.size()-1).formats.get(0).previewUrl:"NA"}' />
 
             <TextView
                 android:id="@+id/icon_name"
@@ -83,12 +83,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_heavy"
-                android:onClick="@{onItemClick}"
                 android:padding="8dp"
-                android:text='@{icon.prices.get(0).price.toString()==""?"NA" :icon.prices.get(0).price.toString() }'
+                app:isVisible="@{icon.premium}"
+                android:text='@{!icon.premium ?"NA" :icon.prices.get(0).price.toString() }'
                 android:textColor="@android:color/holo_green_light"
                 android:textSize="11sp"
-                app:isVisible="@{icon.premium}"
                 app:layout_constraintBottom_toBottomOf="@+id/icon_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1"

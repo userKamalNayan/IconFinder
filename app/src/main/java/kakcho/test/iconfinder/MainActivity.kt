@@ -143,25 +143,15 @@ class MainActivity : AppCompatActivity() {
      *@param iconList List<Icon>? -> Fetched items from api which we need to show
      */
     private fun setDataToRecyclerView(iconList: List<Icon>?) {
-        try {
-            iconList?.let {
-                binding.epoxyRecyclerview.withModels {
-                    try {
-                        iconList.forEachIndexed() { pos, _ ->
-                            return@forEachIndexed iconsRecycler {
-                                Timber.d(" pos = $pos and postId = ${iconList.get(pos).iconId}")
-                                id(pos)
-                                icon(iconList.get(pos))
-                            }
+        iconList?.let {
+            binding.epoxyRecyclerview.withModels {
+                iconList.forEachIndexed() { pos, _ ->
+                        return@forEachIndexed iconsRecycler {
+                            id(pos)
+                            icon(iconList[pos])
                         }
-                    } catch (e: Exception) {
-                        loadData()
-                        Timber.log(Log.ERROR, e)
-                    }
                 }
             }
-        } catch (e: Exception) {
-            Timber.log(Log.ERROR, e)
         }
     }
 
