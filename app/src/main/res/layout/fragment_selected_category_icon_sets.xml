@@ -1,12 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="kakcho.test.iconfinder.ui.selectedcategory.SelectedCategoryIconSetsViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.selectedcategory.SelectedCategoryIconSetsFragment">
 
+        <include
+            android:id="@+id/top"
+            layout="@layout/layout_toolbar" />
 
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/epoxy_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingStart="7dp"
+            android:paddingEnd="7dp"
+            android:paddingBottom="85dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top"
+            app:spanCount="2"
+            tools:itemCount="10" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/content_loading_lottie"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:isVisible="@{viewModel.contentLoading}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading_animation_circle"
+            app:lottie_repeatMode="restart" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:isVisible="@{viewModel.loading}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

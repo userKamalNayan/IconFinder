@@ -22,6 +22,17 @@
         android:name="kakcho.test.iconfinder.ui.selectedcategory.SelectedCategoryIconSetsFragment"
         android:label="selectedCategoryIconSetsFragment"
         tools:layout="@layout/fragment_selected_category_icon_sets">
+        <action
+            android:id="@+id/action_selectedCategoryIconSetsFragment_to_iconsFragment"
+            app:destination="@id/iconsFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/iconsFragment"
+        android:name="kakcho.test.iconfinder.ui.icons.IconsFragment"
+        android:label="iconFragment"
+        tools:layout="@layout/fragment_icons">
+    </fragment>
+
 
 </navigation>

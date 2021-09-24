@@ -3,6 +3,7 @@ package kakcho.test.core.domain.repository
 import kakcho.test.core.data.model.network.Failure
 import kakcho.test.core.data.model.network.Result
 import kakcho.test.core.data.model.response.CategoryResponse
+import kakcho.test.core.data.model.response.IconSetsResponse
 import kakcho.test.core.data.model.response.IconsResponse
 
 /**
@@ -15,4 +16,10 @@ interface IconRepository {
     suspend fun searchIcon(query: String): Result<IconsResponse, Failure>
 
     suspend fun getALlCategories(count: Int, after: String): Result<CategoryResponse, Failure>
+
+    suspend fun getIconSetOfCategory(
+        identifier: String,
+        count: Int,
+        after: String
+    ): Result<IconSetsResponse, Failure>
 }

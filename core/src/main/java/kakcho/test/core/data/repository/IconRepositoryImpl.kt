@@ -6,6 +6,7 @@ import kakcho.test.core.data.model.network.ErrorResponse
 import kakcho.test.core.data.model.network.Failure
 import kakcho.test.core.data.model.network.Result
 import kakcho.test.core.data.model.response.CategoryResponse
+import kakcho.test.core.data.model.response.IconSetsResponse
 import kakcho.test.core.data.model.response.IconsResponse
 import kakcho.test.core.domain.repository.IconRepository
 import kakcho.test.core.utils.Constants
@@ -131,7 +132,66 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
         after: String
     ): Result<CategoryResponse, Failure> {
         return try {
-            val response = iconFinderService.getAllCategories(count = count,after = after)
+            val response = iconFinderService.getAllCategories(count = count, after = after)
+
+            if (response.isSuccessful) {
+                Result.Success(response.body()!!)
+            } else {
+                if (response.code() == 401) {
+                    Result.Error(
+                        Failure.UnauthorizedError,
+                        ErrorResponse(
+                            Constants.Error.unauthorizedErrorMessage,
+                            Exception(response.raw().toString())
+                        )
+                    )
+                } else {
+                    Result.Error(
+                        Failure.ServerError,
+                        ErrorResponse(
+                            Constants.Error.genericErrorMessage,
+                            Exception(response.raw().toString())
+                        )
+                    )
+                }
+            }
+
+        } catch (e: Exception) {
+            return if (e is JsonParseException) {
+                Result.Error(
+                    Failure.ParsingError,
+                    ErrorResponse(Constants.Error.genericErrorMessage, e)
+                )
+            } else {
+                Result.Error(
+                    Failure.NetworkConnection,
+                    ErrorResponse(Constants.Error.genericErrorMessage, e)
+                )
+            }
+        }
+    }
+
+
+    /**
+     * Used to fetch all icon set of a selected category
+     *
+     * @param identifier String -> selected category identifier
+     * @param count Int -> number of items to fetch
+     * @param after String -> used for pagination
+     *
+     * @return Result<IconSetsResponse, Failure>
+     */
+    override suspend fun getIconSetOfCategory(
+        identifier: String,
+        count: Int,
+        after: String
+    ): Result<IconSetsResponse, Failure> {
+        return try {
+            val response = iconFinderService.getIconSetsOfCategory(
+                identifier = identifier,
+                count = count,
+                after = after
+            )
 
             if (response.isSuccessful) {
                 Result.Success(response.body()!!)

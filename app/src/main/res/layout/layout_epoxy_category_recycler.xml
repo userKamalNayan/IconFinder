@@ -10,8 +10,8 @@
             type="android.view.View.OnClickListener" />
 
         <variable
-            name="category"
-            type="kakcho.test.core.data.model.entities.Category" />
+            name="name"
+            type="String" />
 
     </data>
 
@@ -31,8 +31,15 @@
             android:fontFamily="@font/lato_heavy"
             android:textAlignment="center"
             android:gravity="center"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            app:setSelected="@{true}"
+            android:marqueeRepeatLimit="2"
+            android:maxWidth="250dp"
             android:onClick="@{onCategoryClick}"
-            android:text='@{category.name!=null ?category.name :"NA"}'
+            android:text='@{name!=null ?name :"NA"}'
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

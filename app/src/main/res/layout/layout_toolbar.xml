@@ -26,6 +26,13 @@
                 android:fontFamily="@font/lato_heavy"
                 android:gravity="center_vertical"
                 android:textAllCaps="true"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:fadingEdge="horizontal"
+                app:setSelected="@{true}"
+                android:marqueeRepeatLimit="2"
+                android:maxWidth="350dp"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />

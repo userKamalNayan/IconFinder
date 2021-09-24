@@ -45,6 +45,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
     }
 
     override fun setListeners() {
+
         binding.searchView.addTextChangedListener {
             if (it.toString().isEmpty()) {
                 searchJob?.cancel()
@@ -92,7 +93,8 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
                     requireContext().showToast(R.string.error_empty_response.toStringFromResourceId())
                 } else {
                     list.forEach { category ->
-                        categoriesList.add(category)
+                        if (!categoriesList.contains(category))
+                            categoriesList.add(category)
                     }
                     setDataToRecyclerView(categoriesList)
                 }
@@ -143,14 +145,14 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
      * @param iconList List<Icon>? -> Fetched items from api which we need to show
      */
     private fun setDataToRecyclerView(categoryList: List<Category>?) {
-        categoryList?.let {
+        categoryList?.distinct().let {
             binding.epoxyRecyclerview.withModels {
-                categoryList.forEachIndexed() { pos, _ ->
+                categoryList?.forEachIndexed() { pos, _ ->
                     return@forEachIndexed categoryRecycler {
                         id(pos)
-                        category(categoryList[pos])
+                        name(categoryList[pos].name)
                         onCategoryClick { _ ->
-                            navigateToCategoryIcons(categoryList[pos].identifier)
+                            navigateToCategoryIconSets(categoryList[pos].identifier)
                         }
                     }
                 }
@@ -166,7 +168,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
      * @param identifier String -> identifier of the selected category is being passed
      * so that in the next fragment we can fetch data accordingly and can show.
      */
-    private fun navigateToCategoryIcons(identifier: String) {
+    private fun navigateToCategoryIconSets(identifier: String) {
         navigateToDestination(
             R.id.selectedCategoryIconSetsFragment,
             R.id.action_categoryFragment_to_selectedCategoryIconSetsFragment,

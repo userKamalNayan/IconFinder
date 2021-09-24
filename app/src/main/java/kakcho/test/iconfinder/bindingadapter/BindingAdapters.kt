@@ -2,6 +2,7 @@ package kakcho.test.iconfinder.bindingadapter
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -33,4 +34,14 @@ fun setIsVisible(view: View, isVisible: Boolean) {
 @BindingAdapter("loadImageByUrl")
 fun loadImageByUrl(imageView: ImageView, url: String) {
     Glide.with(imageView).load(url).into(imageView)
+}
+
+
+/**
+ * To have horizontal scrolling of text if the text is larger
+ */
+
+@BindingAdapter("setSelected")
+fun setSelected(view: TextView, isSelected: Boolean) {
+    view.isSelected = true
 }

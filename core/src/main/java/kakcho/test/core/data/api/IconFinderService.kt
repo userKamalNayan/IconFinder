@@ -1,6 +1,7 @@
 package kakcho.test.core.data.api
 
 import kakcho.test.core.data.model.response.CategoryResponse
+import kakcho.test.core.data.model.response.IconSetsResponse
 import kakcho.test.core.data.model.response.IconsResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -40,4 +41,13 @@ interface IconFinderService {
         @Query("count") count: Int,
         @Query("after") after: String
     ): Response<CategoryResponse>
+
+
+
+    @GET("categories/{category_identifier}/iconsets")
+    suspend fun getIconSetsOfCategory(
+        @Path("category_identifier") identifier: String,
+        @Query("count") count: Int,
+        @Query("after") after: String
+    ): Response<IconSetsResponse>
 }
