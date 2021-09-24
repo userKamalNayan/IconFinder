@@ -1,6 +1,7 @@
 package kakcho.test.iconfinder.di
 
 import kakcho.test.iconfinder.MainViewModel
+import kakcho.test.iconfinder.ui.category.CategoryViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -13,5 +14,9 @@ val viewModelModule = module {
             getIconsOfSetUseCase = get(),
             searchIconUseCase = get()
         )
+    }
+
+    viewModel {
+        CategoryViewModel(getAllCategoriesUseCase = get())
     }
 }

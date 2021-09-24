@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">IconFinder</string>
+    <string name="search_icons_here">Search icons here</string>
+    <string name="error_unauthorized_access">Access Denied, You are not authorized to access the content.</string>
+    <string name="error_message">Some Error Occurred. Please try again later</string>
+    <string name="error_server_error">Your request could not be processed by server.</string>
+    <string name="error_empty_response">Nothing to show</string>
+</resources>

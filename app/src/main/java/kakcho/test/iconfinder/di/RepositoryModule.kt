@@ -1,7 +1,8 @@
 package kakcho.test.iconfinder.di
 
-import kakcho.test.core.data.repository.IconsOfSetRepositoryImpl
-import kakcho.test.core.domain.repository.IconsOfSetRepository
+import kakcho.test.core.data.repository.IconRepositoryImpl
+import kakcho.test.core.domain.repository.IconRepository
+import kakcho.test.core.domain.usecase.GetAllCategoriesUseCase
 import kakcho.test.core.domain.usecase.GetIconsOfSetUseCase
 import kakcho.test.core.domain.usecase.SearchIconUseCase
 import org.koin.dsl.module
@@ -11,13 +12,17 @@ import org.koin.dsl.module
  */
 
 val repositoryModule = module {
-    single<IconsOfSetRepository> { IconsOfSetRepositoryImpl(iconFinderService = get()) }
+    single<IconRepository> { IconRepositoryImpl(iconFinderService = get()) }
 
     factory {
-        GetIconsOfSetUseCase(iconsOfSetRepository = get())
+        GetIconsOfSetUseCase(iconRepository = get())
     }
 
     factory {
-        SearchIconUseCase(iconFinderRepository = get())
+        SearchIconUseCase(iconRepository = get())
+    }
+
+    factory {
+        GetAllCategoriesUseCase(iconRepository = get())
     }
 }

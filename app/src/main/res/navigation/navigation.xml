@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/categoryFragment"
+    tools:context=".MainActivity">
+
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="kakcho.test.iconfinder.ui.category.CategoryFragment"
+        android:label="categoryFragment"
+        tools:layout="@layout/fragment_category">
+        <action
+            android:id="@+id/action_categoryFragment_to_selectedCategoryIconSetsFragment"
+            app:destination="@id/selectedCategoryIconSetsFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/selectedCategoryIconSetsFragment"
+        android:name="kakcho.test.iconfinder.ui.selectedcategory.SelectedCategoryIconSetsFragment"
+        android:label="selectedCategoryIconSetsFragment"
+        tools:layout="@layout/fragment_selected_category_icon_sets">
+    </fragment>
+
+</navigation>

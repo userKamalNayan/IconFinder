@@ -1,5 +1,6 @@
 package kakcho.test.core.data.api
 
+import kakcho.test.core.data.model.response.CategoryResponse
 import kakcho.test.core.data.model.response.IconsResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -24,4 +25,19 @@ interface IconFinderService {
         @Query("query") query: String,
         @Query("count") count: Int,
     ): Response<IconsResponse>
+
+
+    /**
+     * Used to fetch all categories available
+     * @see[https://developer.iconfinder.com/reference/list-all-categories]
+     *
+     * @param count Int -> Number of items to retrieve
+     * @param after String -> used for pagination, the id of element after which next elements should be fetched
+     * @return Response<CategoryResponse>
+     */
+    @GET("categories")
+    suspend fun getAllCategories(
+        @Query("count") count: Int,
+        @Query("after") after: String
+    ): Response<CategoryResponse>
 }
