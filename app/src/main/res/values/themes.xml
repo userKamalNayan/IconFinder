@@ -13,4 +13,10 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.Splash" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/iconfinder_logo_icon</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#fff</item>
+
+    </style>
 </resources>

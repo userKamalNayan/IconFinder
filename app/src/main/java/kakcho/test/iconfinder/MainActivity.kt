@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setTheme(R.style.Theme_IconFinder)
         binding.lifecycleOwner = this
         setContentView(binding.root)
         setViewModel()
@@ -39,11 +40,10 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Added debounce in search operation
-     * to optimize api calls and to  prevent
+     * to optimize api calls and to prevent
      * screen flickering
      */
     private fun setListeners() {
-
         binding.searchView.addTextChangedListener {
             if (it.toString().isEmpty()) {
                 searchJob?.cancel()
@@ -140,13 +140,14 @@ class MainActivity : AppCompatActivity() {
      * i) we get DiffUtil out of the box
      * ii) State Management handled out of the box
      *
-     *@param iconList List<Icon>? -> Fetched items from api which we need to show
+     * @param iconList List<Icon>? -> Fetched items from api which we need to show
      */
     private fun setDataToRecyclerView(iconList: List<Icon>?) {
         iconList?.let {
             binding.epoxyRecyclerview.withModels {
                 iconList.forEachIndexed() { pos, _ ->
-                        return@forEachIndexed iconsRecycler {
+                    if (iconList[pos].isPremium)
+                    return@forEachIndexed iconsRecycler {
                             id(pos)
                             icon(iconList[pos])
                         }
