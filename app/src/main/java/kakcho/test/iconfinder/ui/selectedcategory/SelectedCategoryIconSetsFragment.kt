@@ -1,6 +1,8 @@
 package kakcho.test.iconfinder.ui.selectedcategory
 
+import android.view.animation.AccelerateInterpolator
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kakcho.test.core.data.model.entities.IconSet
@@ -24,6 +26,7 @@ class SelectedCategoryIconSetsFragment :
     }
 
     private val iconSetList: ArrayList<IconSet> = ArrayList()
+    private var showOnlyFree = false
 
     @JvmField
     val LOAD_DATA_COUNT: Int = 20;
@@ -42,7 +45,7 @@ class SelectedCategoryIconSetsFragment :
 
     override fun setData() {
         setToolbar(identifier)
-        loadData(identifier, count = LOAD_DATA_COUNT, after = "")
+        loadData(identifier, count = LOAD_DATA_COUNT, after = "", showOnlyFree)
     }
 
 
@@ -58,12 +61,25 @@ class SelectedCategoryIconSetsFragment :
                     completelyVisibleItemIndex = 0
                 }
 
-                checkIfDataLoadingRequired(completelyVisibleItemIndex)
+                checkIfDataLoadingRequired(completelyVisibleItemIndex, layoutManager.itemCount)
             }
         })
+
+
+        binding.filterSwitch.setOnCheckedChangeListener { _, isChecked ->
+            showOnlyFree = isChecked
+            iconSetList.clear()
+            binding.epoxyRecyclerview.requestModelBuild()
+            loadData(identifier, LOAD_DATA_COUNT, "", isChecked)
+        }
+
+        binding.closeFilterLayout.setOnClickListener {
+            binding.filterContainer.isVisible=false
+        }
     }
 
     override fun setObservers() {
+
         viewModel.iconSetData.observe(viewLifecycleOwner, {
             if (it.isNullOrEmpty()) {
                 context?.showToast(R.string.error_empty_response.toStringFromResourceId())
@@ -92,17 +108,21 @@ class SelectedCategoryIconSetsFragment :
      *
      * @param completelyVisibleItemIndex Int -> index of completely visible item to user
      */
-    private fun checkIfDataLoadingRequired(completelyVisibleItemIndex: Int) {
-
-        if (completelyVisibleItemIndex >= iconSetList.size - 2) {
+    private fun checkIfDataLoadingRequired(completelyVisibleItemIndex: Int, totalItems: Int) {
+        if (completelyVisibleItemIndex + 1 == totalItems) {
             viewModel.getIconSets(
                 identifier,
                 LOAD_DATA_COUNT,
-                iconSetList[iconSetList.size - 1].iconSetId
+                iconSetList[iconSetList.size - 1].iconSetId, showOnlyFree
             )
         }
     }
 
+
+    /**
+     *
+     * @param iconSetList ArrayList<IconSet>
+     */
     private fun setDataToRecyclerView(iconSetList: ArrayList<IconSet>) {
         iconSetList?.distinct().let {
             binding.epoxyRecyclerview.withModels {
@@ -120,6 +140,12 @@ class SelectedCategoryIconSetsFragment :
 
     }
 
+    /**
+     * navigates user to next screen, when a particular
+     * icon set is clicked.
+     *
+     * @param iconSetId String -> iconSet Id of selected Icon Set
+     */
     private fun navigateToIconsOfIconSet(iconSetId: String) {
         navigateToDestination(
             R.id.iconsFragment, R.id.action_selectedCategoryIconSetsFragment_to_iconsFragment,
@@ -128,8 +154,15 @@ class SelectedCategoryIconSetsFragment :
 
     }
 
-    private fun loadData(identifier: String, count: Int, after: String) {
-        viewModel.getIconSets(identifier, count, after)
+    /**
+     * Used to load data whenever data loading is required
+     *
+     * @param identifier String -> identifier of selected category
+     * @param count Int -> no of items to be fetched
+     * @param after String -> used for pagination
+     */
+    private fun loadData(identifier: String, count: Int, after: String, showOnlyFree: Boolean) {
+        viewModel.getIconSets(identifier, count, after, showOnlyFree)
     }
 
 }

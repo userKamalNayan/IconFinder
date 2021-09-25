@@ -17,6 +17,8 @@ interface IconFinderService {
     suspend fun getIcons(
         //   @Header("Authorization") api: String,
         @Path("setId") setId: String,
+        @Query("count") count: Int,
+        @Query("offset") offset:Int
     ): Response<IconsResponse>
 
 
@@ -39,7 +41,7 @@ interface IconFinderService {
     @GET("categories")
     suspend fun getAllCategories(
         @Query("count") count: Int,
-        @Query("after") after: String
+        @Query("after") after: String,
     ): Response<CategoryResponse>
 
 
@@ -48,6 +50,7 @@ interface IconFinderService {
     suspend fun getIconSetsOfCategory(
         @Path("category_identifier") identifier: String,
         @Query("count") count: Int,
-        @Query("after") after: String
+        @Query("after") after: String,
+        @Query("premium") premium: String
     ): Response<IconSetsResponse>
 }

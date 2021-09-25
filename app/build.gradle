@@ -93,4 +93,7 @@ dependencies {
     //L O T T I E
     def lottieVersion = "3.7.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    //F O R   R U N T I M E    P E R M I S S I O N S
+    implementation 'com.github.fondesa:kpermissions:3.2.1'
 }

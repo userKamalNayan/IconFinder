@@ -25,9 +25,7 @@ class MainViewModel(
     val isInSearchMode: LiveData<Boolean>
         get() = _isInSearchMode
 
-    private val _iconsData = MutableLiveData<List<Icon>>()
-    val iconsData: LiveData<List<Icon>>
-        get() = _iconsData
+
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean>
@@ -50,18 +48,6 @@ class MainViewModel(
         }
     }
 
-    /**
-     * Used to fetch icons of a specific set and further
-     * invokes [handleIconFetchSuccess] [handleIconFetchError]
-     * functions according to the response received
-     */
-    fun fetchIconsOfSet(iconSetID: String) {
-        viewModelScope.launch {
-            _loading.postValue(true)
-            val result = getIconsOfSetUseCase.invoke(iconSetID)
-            result.successOrError(::handleIconFetchSuccess, ::handleIconFetchError)
-        }
-    }
 
     /**
      * Used to perform search operation on the query entered by user
@@ -70,39 +56,15 @@ class MainViewModel(
      *
      *  @param query String -> Input provided by user
      */
-    fun searchIcon(query: String) {
-        viewModelScope.launch {
-            _loading.postValue(true)
-            val result =searchIconUseCase.invoke(query)
-            result.successOrError(::handleIconFetchSuccess, ::handleIconFetchError)
-        }
-    }
+//    fun searchIcon(query: String) {
+//        viewModelScope.launch {
+//            _loading.postValue(true)
+//            val result =searchIconUseCase.invoke(query)
+//            result.successOrError(::handleIconFetchSuccess, ::handleIconFetchError)
+//        }
+//    }
 
-    /**
-     * Used to handle success case, i.e
-     * when we have successfully fetched data from api
-     * then handling the further operations and tasks
-     *
-     * @param response IconsResponse -> data fetched from api
-     */
-    private fun handleIconFetchSuccess(response: IconsResponse) {
-        _loading.postValue(false)
-        _iconsData.postValue(response.data)
-    }
 
-    /**
-     * Used to handle failure case, i.e
-     * when we have encountered any exception
-     * so in this function we perform further tasks
-     * which should be done after encountering failure
-     *
-     * @param failure Failure -> Type of failure occurred
-     * @param error ErrorResponse? -> Exception and message
-     */
-    private fun handleIconFetchError(failure: Failure, error: ErrorResponse?) {
-        _loading.postValue(false)
-        _error.postValue(Pair(failure, error))
-    }
 
 
 

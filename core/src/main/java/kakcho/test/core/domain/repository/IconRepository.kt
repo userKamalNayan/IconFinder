@@ -11,7 +11,11 @@ import kakcho.test.core.data.model.response.IconsResponse
  */
 interface IconRepository {
 
-    suspend fun getIconsOfSet(setID: String): Result<IconsResponse, Failure>
+    suspend fun getIconsOfSet(
+        setID: String,
+        count: Int,
+        offset: Int
+    ): Result<IconsResponse, Failure>
 
     suspend fun searchIcon(query: String): Result<IconsResponse, Failure>
 
@@ -20,6 +24,7 @@ interface IconRepository {
     suspend fun getIconSetOfCategory(
         identifier: String,
         count: Int,
-        after: String
+        after: String,
+        showOnlyFree:Boolean
     ): Result<IconSetsResponse, Failure>
 }

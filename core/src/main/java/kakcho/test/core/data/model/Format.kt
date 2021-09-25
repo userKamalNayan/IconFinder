@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Created by Kamal Nayan on 22-09-2021 at 10:53
  */
-data class Format(
+data class  Format(
     val format: String,
 
     @SerializedName("download_url")

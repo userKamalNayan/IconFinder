@@ -5,4 +5,7 @@
     <string name="error_message">Some Error Occurred. Please try again later</string>
     <string name="error_server_error">Your request could not be processed by server.</string>
     <string name="error_empty_response">Nothing to show</string>
+    <string name="toolbar_text_icons">Icons</string>
+    <string name="download_size_instruction">Select Your Preferred Icon Size To Download</string>
+    <string name="text_download">Download</string>
 </resources>

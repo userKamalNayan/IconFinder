@@ -20,6 +20,36 @@
             android:id="@+id/top"
             layout="@layout/layout_toolbar" />
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/filter_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:isVisible="@{!viewModel.loading}"
+            android:padding="5dp"
+            android:weightSum="2"
+            app:layout_constraintVertical_bias="0"
+            android:background="@color/white_faded"
+            app:layout_constraintBottom_toTopOf="@id/epoxy_recyclerview"
+            app:layout_constraintTop_toBottomOf="@+id/top">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/filter_switch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_heavy"
+                android:layout_weight="1.85"
+                android:text="Want to see only free icons ?" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/close_filter_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:tint="@color/black"
+                android:padding="15dp"
+                android:layout_weight=".15"
+                android:src="@drawable/ic_cross" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
         <com.airbnb.epoxy.EpoxyRecyclerView
             android:id="@+id/epoxy_recyclerview"
             android:layout_width="match_parent"
@@ -27,14 +57,16 @@
             android:clipToPadding="false"
             android:paddingStart="7dp"
             android:paddingEnd="7dp"
+            app:isVisible="@{!viewModel.loading}"
             android:paddingBottom="85dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top"
+            app:layout_constraintTop_toBottomOf="@+id/filter_container"
             app:spanCount="2"
-            tools:itemCount="10" />
+            tools:itemCount="10"
+            tools:listitem="@layout/layout_epoxy_category_recycler" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/content_loading_lottie"

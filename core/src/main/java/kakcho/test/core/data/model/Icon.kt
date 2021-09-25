@@ -14,7 +14,7 @@ data class Icon(
     @SerializedName("raster_sizes")
     val rasterSizes: List<RasterSize>,
 
-    val prices: List<Price>,
+    val prices: List<Price>?,
 
     @SerializedName("icon_id")
     val iconId: Int

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="onItemClick"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="selectedSize"
+            type="kakcho.test.core.data.model.RasterSize" />
+
+        <variable
+            name="rasterSize"
+            type="kakcho.test.core.data.model.RasterSize" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_margin="12dp"
+        android:onClick="@{onItemClick}"
+        android:padding="7dp"
+        app:cardCornerRadius="7dp"
+        app:cardUseCompatPadding="@{selectedSize==null? true : selectedSize.sizeWidth==rasterSize.sizeWidth?false:true }">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/size_card_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:setSelectedBackground='@{selectedSize==null? false : selectedSize.sizeWidth==rasterSize.sizeWidth }'>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                app:cardCornerRadius="7dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp"
+                    android:background="@color/white">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/icon_image"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="20dp"
+                        android:scaleType="fitXY"
+                        app:layout_constraintBottom_toTopOf="@+id/size"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0"
+                        app:layout_constraintVertical_chainStyle="spread_inside"
+                        app:loadImageByUrl="@{rasterSize.formats.get(0).previewUrl}" />
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/white_faded"
+                        app:layout_constraintBottom_toTopOf="@+id/size"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/icon_image"
+                        app:layout_constraintVertical_bias="1" />
+
+                    <TextView
+                        android:id="@+id/size"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/lato_heavy"
+                        android:gravity="center_horizontal"
+                        android:textAlignment="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/icon_image"
+                        app:setDimension="@{rasterSize}" />
+
+                    <!--                    <View-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="1dp"-->
+                    <!--                        android:background="@color/white_faded"-->
+                    <!--                        app:layout_constraintVertical_bias="0"-->
+                    <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/size" />-->
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.cardview.widget.CardView>
+</layout>

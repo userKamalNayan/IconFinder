@@ -32,14 +32,14 @@ class SelectedCategoryIconSetsViewModel(private val getIconSetOfSelectedCategory
         get() = _iconSetData
 
 
-    fun getIconSets(identifier: String, count: Int, after: String) {
+    fun getIconSets(identifier: String, count: Int, after: String,showOnlyFree:Boolean) {
         viewModelScope.launch {
             if (after == "")
                 _loading.postValue(true)
             else
                 _contentLoading.postValue(true)
 
-            val response = getIconSetOfSelectedCategoryUseCase.invoke(identifier, count, after)
+            val response = getIconSetOfSelectedCategoryUseCase.invoke(identifier, count, after,showOnlyFree)
             response.successOrError(::handleIconSetFetchSuccess, ::handleIconSetFetchError)
         }
     }

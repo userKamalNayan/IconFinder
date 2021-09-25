@@ -18,6 +18,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment_category) {
 
@@ -71,13 +72,17 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
                     completelyVisibleItemIndex = 0
                 }
 
-                checkIfDataLoadingRequired(completelyVisibleItemIndex)
+                if (!isInSearchMode)
+                    checkIfDataLoadingRequired(completelyVisibleItemIndex, layoutManager.itemCount)
             }
         })
     }
 
     override fun setObservers() {
         viewModel.isInSearchMode.observe(this, { isInSearchMode ->
+            if (this.isInSearchMode == isInSearchMode)
+                return@observe
+
             this.isInSearchMode = isInSearchMode
 
             if (!isInSearchMode) {
@@ -117,13 +122,10 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
      *
      * @param completelyVisibleItemIndex Int -> index of completely visible item to user
      */
-    private fun checkIfDataLoadingRequired(completelyVisibleItemIndex: Int) {
+    private fun checkIfDataLoadingRequired(completelyVisibleItemIndex: Int, totalItems: Int) {
 
-        if (completelyVisibleItemIndex >= categoriesList.size - 2) {
-            viewModel.loadCategories(
-                LOAD_DATA_COUNT,
-                categoriesList[categoriesList.size - 1].identifier
-            )
+        if (completelyVisibleItemIndex + 1 == totalItems) {
+            loadCategories(after = categoriesList[categoriesList.size - 1].identifier)
         }
     }
 
@@ -132,8 +134,8 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
      * usedLoad categories data when the fragment is created
      * so here in the after part we are sending empty identifier
      */
-    private fun loadCategories() {
-        viewModel.loadCategories(LOAD_DATA_COUNT, "")
+    private fun loadCategories(after: String = "") {
+        viewModel.loadCategories(LOAD_DATA_COUNT, after)
     }
 
 
@@ -169,6 +171,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(R.layout.fragment
      * so that in the next fragment we can fetch data accordingly and can show.
      */
     private fun navigateToCategoryIconSets(identifier: String) {
+
         navigateToDestination(
             R.id.selectedCategoryIconSetsFragment,
             R.id.action_categoryFragment_to_selectedCategoryIconSetsFragment,

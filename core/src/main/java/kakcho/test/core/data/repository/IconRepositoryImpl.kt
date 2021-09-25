@@ -27,9 +27,13 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
      * @param setID String -> IconSet Id
      * @return Result<IconsResponse, Failure>
      */
-    override suspend fun getIconsOfSet(setID: String): Result<IconsResponse, Failure> {
+    override suspend fun getIconsOfSet(
+        setID: String,
+        count: Int,
+        offset: Int
+    ): Result<IconsResponse, Failure> {
         return try {
-            val response = iconFinderService.getIcons(setId = setID)
+            val response = iconFinderService.getIcons(setId = setID, count = count, offset = offset)
             if (response.isSuccessful) {
                 Result.Success(response.body()!!)
             } else {
@@ -37,7 +41,7 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
                     Result.Error(
                         Failure.UnauthorizedError,
                         ErrorResponse(
-                            Constants.Error.unauthorizedErrorMessage,
+                            Constants.Error.UNAUTHORIZED_ERROR_MESSAGE,
                             Exception(response.raw().toString())
                         )
                     )
@@ -45,7 +49,7 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
                     Result.Error(
                         Failure.ServerError,
                         ErrorResponse(
-                            Constants.Error.genericErrorMessage,
+                            Constants.Error.GENERIC_ERROR_MESSAGE,
                             Exception(response.raw().toString())
                         )
                     )
@@ -55,12 +59,12 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
             return if (e is JsonParseException) {
                 Result.Error(
                     Failure.ParsingError,
-                    ErrorResponse(Constants.Error.genericErrorMessage, e)
+                    ErrorResponse(Constants.Error.GENERIC_ERROR_MESSAGE, e)
                 )
             } else {
                 Result.Error(
                     Failure.NetworkConnection,
-                    ErrorResponse(Constants.Error.genericErrorMessage, e)
+                    ErrorResponse(Constants.Error.GENERIC_ERROR_MESSAGE, e)
                 )
             }
         }
@@ -89,7 +93,7 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
                     Result.Error(
                         Failure.UnauthorizedError,
                         ErrorResponse(
-                            Constants.Error.unauthorizedErrorMessage,
+                            Constants.Error.UNAUTHORIZED_ERROR_MESSAGE,
                             Exception(response.raw().toString())
                         )
                     )
@@ -97,7 +101,7 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
                     Result.Error(
                         Failure.ServerError,
                         ErrorResponse(
-                            Constants.Error.genericErrorMessage,
+                            Constants.Error.GENERIC_ERROR_MESSAGE,
                             Exception(response.raw().toString())
                         )
                     )
@@ -108,12 +112,12 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
             return if (e is JsonParseException) {
                 Result.Error(
                     Failure.ParsingError,
-                    ErrorResponse(Constants.Error.genericErrorMessage, e)
+                    ErrorResponse(Constants.Error.GENERIC_ERROR_MESSAGE, e)
                 )
             } else {
                 Result.Error(
                     Failure.NetworkConnection,
-                    ErrorResponse(Constants.Error.genericErrorMessage, e)
+                    ErrorResponse(Constants.Error.GENERIC_ERROR_MESSAGE, e)
                 )
             }
         }
@@ -141,7 +145,7 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
                     Result.Error(
                         Failure.UnauthorizedError,
                         ErrorResponse(
-                            Constants.Error.unauthorizedErrorMessage,
+                            Constants.Error.UNAUTHORIZED_ERROR_MESSAGE,
                             Exception(response.raw().toString())
                         )
                     )
@@ -149,7 +153,7 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
                     Result.Error(
                         Failure.ServerError,
                         ErrorResponse(
-                            Constants.Error.genericErrorMessage,
+                            Constants.Error.GENERIC_ERROR_MESSAGE,
                             Exception(response.raw().toString())
                         )
                     )
@@ -160,12 +164,12 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
             return if (e is JsonParseException) {
                 Result.Error(
                     Failure.ParsingError,
-                    ErrorResponse(Constants.Error.genericErrorMessage, e)
+                    ErrorResponse(Constants.Error.GENERIC_ERROR_MESSAGE, e)
                 )
             } else {
                 Result.Error(
                     Failure.NetworkConnection,
-                    ErrorResponse(Constants.Error.genericErrorMessage, e)
+                    ErrorResponse(Constants.Error.GENERIC_ERROR_MESSAGE, e)
                 )
             }
         }
@@ -184,13 +188,16 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
     override suspend fun getIconSetOfCategory(
         identifier: String,
         count: Int,
-        after: String
+        after: String,
+        showOnlyFree: Boolean,
     ): Result<IconSetsResponse, Failure> {
         return try {
+            val premium: String = if (showOnlyFree) "false" else ""
             val response = iconFinderService.getIconSetsOfCategory(
                 identifier = identifier,
                 count = count,
-                after = after
+                after = after,
+                premium = premium
             )
 
             if (response.isSuccessful) {
@@ -200,7 +207,7 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
                     Result.Error(
                         Failure.UnauthorizedError,
                         ErrorResponse(
-                            Constants.Error.unauthorizedErrorMessage,
+                            Constants.Error.UNAUTHORIZED_ERROR_MESSAGE,
                             Exception(response.raw().toString())
                         )
                     )
@@ -208,7 +215,7 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
                     Result.Error(
                         Failure.ServerError,
                         ErrorResponse(
-                            Constants.Error.genericErrorMessage,
+                            Constants.Error.GENERIC_ERROR_MESSAGE,
                             Exception(response.raw().toString())
                         )
                     )
@@ -219,12 +226,12 @@ class IconRepositoryImpl(private val iconFinderService: IconFinderService) :
             return if (e is JsonParseException) {
                 Result.Error(
                     Failure.ParsingError,
-                    ErrorResponse(Constants.Error.genericErrorMessage, e)
+                    ErrorResponse(Constants.Error.GENERIC_ERROR_MESSAGE, e)
                 )
             } else {
                 Result.Error(
                     Failure.NetworkConnection,
-                    ErrorResponse(Constants.Error.genericErrorMessage, e)
+                    ErrorResponse(Constants.Error.GENERIC_ERROR_MESSAGE, e)
                 )
             }
         }

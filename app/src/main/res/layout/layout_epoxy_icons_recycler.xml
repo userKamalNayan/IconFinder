@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/icon_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -68,11 +68,13 @@
 
             <ImageView
                 android:id="@+id/download_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:padding="8dp"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_download"
-                app:isVisible="@{!icon.premium}"
+                android:onClick="@{onItemClick}"
+                app:isVisible="@{!icon.isPremium}"
                 app:layout_constraintBottom_toBottomOf="@+id/icon_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1"
@@ -84,8 +86,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato_heavy"
                 android:padding="8dp"
-                app:isVisible="@{icon.premium}"
-                android:text='@{!icon.premium ?"NA" :icon.prices.get(0).price.toString() }'
+                app:isVisible="@{icon.isPremium}"
+                app:setFormattedPrice='@{!icon.isPremium ?"NA" :icon.prices.get(0).price.toString() }'
                 android:textColor="@android:color/holo_green_light"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="@+id/icon_name"
