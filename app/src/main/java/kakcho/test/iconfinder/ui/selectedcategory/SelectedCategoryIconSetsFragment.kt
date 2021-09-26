@@ -1,6 +1,6 @@
 package kakcho.test.iconfinder.ui.selectedcategory
 
-import android.view.animation.AccelerateInterpolator
+import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +15,7 @@ import kakcho.test.iconfinder.extensions.navigateToDestination
 import kakcho.test.iconfinder.extensions.showToast
 import kakcho.test.iconfinder.ui.category.CategoryFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class SelectedCategoryIconSetsFragment :
     BaseFragment<FragmentSelectedCategoryIconSetsBinding>(R.layout.fragment_selected_category_icon_sets) {
@@ -69,12 +70,24 @@ class SelectedCategoryIconSetsFragment :
         binding.filterSwitch.setOnCheckedChangeListener { _, isChecked ->
             showOnlyFree = isChecked
             iconSetList.clear()
-            binding.epoxyRecyclerview.requestModelBuild()
+            try {
+                binding.epoxyRecyclerview.requestModelBuild()
+            } catch (e: Exception) {
+                when (e) {
+                    is IllegalStateException -> {
+                        Timber.d("Epoxy Controller")
+                    }
+                    else -> {
+                        Timber.log(Log.ERROR, e)
+                    }
+                }
+
+            }
             loadData(identifier, LOAD_DATA_COUNT, "", isChecked)
         }
 
         binding.closeFilterLayout.setOnClickListener {
-            binding.filterContainer.isVisible=false
+            binding.filterContainer.isVisible = false
         }
     }
 

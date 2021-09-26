@@ -8,4 +8,5 @@
     <string name="toolbar_text_icons">Icons</string>
     <string name="download_size_instruction">Select Your Preferred Icon Size To Download</string>
     <string name="text_download">Download</string>
+    <string name="text_show_only_free">Want to see only free icons ?</string>
 </resources>
