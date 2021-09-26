@@ -65,8 +65,6 @@ class IconsFragment : BaseFragment<FragmentIconsBinding>(R.layout.fragment_icons
                 if (completelyVisibleItemIndex < 0) {
                     completelyVisibleItemIndex = 0
                 }
-
-
                 checkIfDataLoadingRequired(completelyVisibleItemIndex, layoutManager.itemCount)
             }
         })
@@ -105,6 +103,8 @@ class IconsFragment : BaseFragment<FragmentIconsBinding>(R.layout.fragment_icons
         }
     }
 
+
+
     private fun setDataToRecyclerView(iconsList: List<Icon>) {
         binding.epoxyRecyclerview.withModels {
             iconsList?.forEachIndexed { pos, _ ->
@@ -125,6 +125,13 @@ class IconsFragment : BaseFragment<FragmentIconsBinding>(R.layout.fragment_icons
     }
 
 
+    /**
+     * Shows BottomSheet Dialog and all the
+     * available sizes are shown in a recycler view
+     *
+     * @param icon Icon -> Icon object for which download pressed
+     */
+
     private fun handleDownloadClick(icon: Icon) {
         val bottomSheet = BottomSheetDialog(requireContext())
         bottomSheet.setContentView(R.layout.bottom_sheet_download_icon)
@@ -144,6 +151,14 @@ class IconsFragment : BaseFragment<FragmentIconsBinding>(R.layout.fragment_icons
         bottomSheet.show()
     }
 
+    /**
+     * Checks either a size is selected or not and if selected then
+     * forwards url and other required data to [proceedToDownloadProcess]
+     *
+     * @param downloadButton AppCompatButton? -> button to whom listener is attached
+     * @param bottomSheet BottomSheetDialog -> bottomSheet dialog, in order to forward
+     * to next functions
+     */
     private fun setDownloadClickListener(
         downloadButton: AppCompatButton?,
         bottomSheet: BottomSheetDialog
@@ -159,6 +174,17 @@ class IconsFragment : BaseFragment<FragmentIconsBinding>(R.layout.fragment_icons
         }
     }
 
+    /**
+     * Used for checking prerequisites like
+     * storage permission and if available
+     * then we are initializing download
+     *
+     * @param downloadUrl String -> url of file
+     * @param ext String -> extension of file
+     * @param bottomSheet BottomSheetDialog -> bottom sheet , in order to dismiss
+     * when download is enqueued.
+     *
+     */
     private fun proceedToDownloadProcess(
         downloadUrl: String,
         ext: String,
@@ -172,6 +198,14 @@ class IconsFragment : BaseFragment<FragmentIconsBinding>(R.layout.fragment_icons
         }
     }
 
+    /**
+     * This is a [HigherOrderFunction] Used to check that
+     * either storage permission is available or not and
+     * [storageAccessible] is invoked to send callback
+     * if we permission is granted
+     *
+     * @param storageAccessible Function0<Unit> -> callback function
+     */
     private fun checkStoragePermission(storageAccessible: () -> Unit) {
         permissionsBuilder(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .build()
@@ -187,6 +221,13 @@ class IconsFragment : BaseFragment<FragmentIconsBinding>(R.layout.fragment_icons
     }
 
 
+    /**
+     * Used to set data to recycler view which shows all available
+     * raster sizes which can be downloaded
+     *
+     * @param sizeRecyclerView EpoxyRecyclerView? -> Recycler view in which data is being shown
+     * @param icon Icon -> Icon object whose raster sizes will be shown
+     */
     private fun showRasterSizes(sizeRecyclerView: EpoxyRecyclerView?, icon: Icon) {
         sizeRecyclerView?.withModels {
             icon.rasterSizes.forEachIndexed { pos, _ ->
@@ -206,6 +247,9 @@ class IconsFragment : BaseFragment<FragmentIconsBinding>(R.layout.fragment_icons
     }
 
 
+    /**
+     * Load icons data of a selected icon set
+     */
     private fun loadIconsData() {
         viewModel.fetchIconsOfSet(iconSetId, dataCount, offset)
         offset += dataCount

@@ -120,6 +120,8 @@ class SelectedCategoryIconSetsFragment :
 
 
     /**
+     * Used to set data to recycler view after data is loaded
+     * from remote
      *
      * @param iconSetList ArrayList<IconSet>
      */
@@ -160,6 +162,8 @@ class SelectedCategoryIconSetsFragment :
      * @param identifier String -> identifier of selected category
      * @param count Int -> no of items to be fetched
      * @param after String -> used for pagination
+     * @param showOnlyFree Boolean -> used to filter data being shown, if yes then only free iconsets will be shown
+     *
      */
     private fun loadData(identifier: String, count: Int, after: String, showOnlyFree: Boolean) {
         viewModel.getIconSets(identifier, count, after, showOnlyFree)
