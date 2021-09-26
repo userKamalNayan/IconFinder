@@ -37,7 +37,6 @@ class IconsViewModel(private val getIconsOfSetUseCase: GetIconsOfSetUseCase) : V
      * functions according to the response received
      */
     fun fetchIconsOfSet(iconSetID: String, count: Int, offset: Int) {
-        Timber.d("offset = $offset")
         viewModelScope.launch {
             if (offset == 0)
                 _loading.postValue(true)
@@ -58,7 +57,6 @@ class IconsViewModel(private val getIconsOfSetUseCase: GetIconsOfSetUseCase) : V
      * @param response IconsResponse -> data fetched from api
      */
     private fun handleIconFetchSuccess(response: IconsResponse) {
-
         if (_contentLoading.value == true)
             _contentLoading.postValue(false)
         else
